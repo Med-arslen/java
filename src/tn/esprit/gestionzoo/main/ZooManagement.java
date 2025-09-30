@@ -1,7 +1,7 @@
-package main;
+package tn.esprit.gestionzoo.main;
 
-import entities.Animal;
-import entities.Zoo;
+import tn.esprit.gestionzoo.entities.Animal;
+import tn.esprit.gestionzoo.entities.Zoo;
 
 import java.util.Scanner;
 

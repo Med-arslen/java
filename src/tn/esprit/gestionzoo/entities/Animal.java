@@ -1,4 +1,4 @@
-package entities;
+package tn.esprit.gestionzoo.entities;
 
 public class Animal {
     private String family;
@@ -9,7 +9,7 @@ public class Animal {
     public Animal(String family, String name, int age, boolean isMammal) {
         this.family = family;
         this.name = name;
-        setAge(age); // passer par le setter pour validation
+        setAge(age);
         this.isMammal = isMammal;
     }
 
@@ -24,7 +24,7 @@ public class Animal {
 
     public void setAge(int age) {
         if (age < 0) {
-            System.out.println("⚠️ Âge invalide, mis à 0 par défaut.");
+            System.out.println("Âge invalide");
             this.age = 0;
         } else {
             this.age = age;

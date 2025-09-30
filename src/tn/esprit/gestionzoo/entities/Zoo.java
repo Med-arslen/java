@@ -1,4 +1,4 @@
-package entities;
+package tn.esprit.gestionzoo.entities;
 
 public class Zoo {
     public static final int NBR_CAGES = 25;
