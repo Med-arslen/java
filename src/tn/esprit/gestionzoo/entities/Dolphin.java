@@ -13,6 +13,11 @@ public class Dolphin extends Aquatic {
     }
 
     @Override
+    public void swim() {
+        System.out.println("This dolphin is swimming.");
+    }
+
+    @Override
     public String toString() {
         return super.toString() + ", Dolphin{" +
                 "swimmingSpeed=" + swimmingSpeed +
