@@ -1,7 +1,6 @@
 package tn.esprit.gestionzoo.main;
 
-import tn.esprit.gestionzoo.entities.Animal;
-import tn.esprit.gestionzoo.entities.Zoo;
+import tn.esprit.gestionzoo.entities.*;
 
 import java.util.Scanner;
 
@@ -14,44 +13,43 @@ public class ZooManagement {
 
         int choix;
         do {
-            System.out.println("\n=== Menu entities.Zoo Management ===");
-            System.out.println("1. Ajouter un animal au Zoo1 (" + zoo1.getName() + ")");
-            System.out.println("2. Ajouter un animal au Zoo2 (" + zoo2.getName() + ")");
-            System.out.println("3. Afficher les animaux du Zoo1");
-            System.out.println("4. Afficher les animaux du Zoo2");
-            System.out.println("5. Comparer les deux zoos");
-            System.out.println("6. Supprimer un animal du Zoo1");
-            System.out.println("7. Supprimer un animal du Zoo2");
+            System.out.println("\n=== MENU GESTION DU ZOO ===");
+            System.out.println("1. Ajouter un animal terrestre");
+            System.out.println("2. Ajouter un animal aquatique");
+            System.out.println("3. Ajouter un dauphin");
+            System.out.println("4. Ajouter un pingouin");
+            System.out.println("5. Afficher les animaux de chaque zoo");
+            System.out.println("6. Supprimer un animal");
+            System.out.println("7. Comparer les zoos");
             System.out.println("0. Quitter");
             System.out.print("Votre choix : ");
             choix = scanner.nextInt();
-            scanner.nextLine(); 
+            scanner.nextLine();
 
             switch (choix) {
                 case 1:
-                    ajouterAnimalManuel(scanner, zoo1);
+                    ajouterTerrestrial(scanner, zoo1);
                     break;
                 case 2:
-                    ajouterAnimalManuel(scanner, zoo2);
+                    ajouterAquatic(scanner, zoo1);
                     break;
                 case 3:
-                    zoo1.displayAnimals();
+                    ajouterDolphin(scanner, zoo1);
                     break;
                 case 4:
-                    zoo2.displayAnimals();
+                    ajouterPenguin(scanner, zoo1);
                     break;
                 case 5:
-                    Zoo plusGrand = Zoo.comparerZoo(zoo1, zoo2);
-                    if (plusGrand != null) {
-                        System.out.println("\n Le zoo avec le plus d’animaux est : "
-                                + plusGrand.getName() + " (" + plusGrand.getAnimalCount() + " animaux)");
-                    }
+                    zoo1.displayAnimals();
+                    zoo2.displayAnimals();
                     break;
                 case 6:
-                    supprimerAnimalManuel(scanner, zoo1);
+                    supprimerAnimal(scanner, zoo1);
                     break;
                 case 7:
-                    supprimerAnimalManuel(scanner, zoo2);
+                    Zoo plusGrand = Zoo.comparerZoo(zoo1, zoo2);
+                    if (plusGrand != null)
+                        System.out.println("Le zoo le plus grand est : " + plusGrand.getName());
                     break;
                 case 0:
                     System.out.println("Au revoir !");
@@ -65,47 +63,94 @@ public class ZooManagement {
         scanner.close();
     }
 
-    // Méthode pour ajouter un animal
-    public static void ajouterAnimalManuel(Scanner scanner, Zoo zoo) {
-        System.out.print("Entrez la famille de l’animal : ");
+
+    public static void ajouterTerrestrial(Scanner scanner, Zoo zoo) {
+        System.out.print("Famille : ");
         String family = scanner.nextLine();
-
-        System.out.print("Entrez le nom de l’animal : ");
+        System.out.print("Nom : ");
         String name = scanner.nextLine();
-
-        System.out.print("Entrez l’âge de l’animal : ");
+        System.out.print("Âge : ");
         int age = scanner.nextInt();
-
-        System.out.print("Est-ce un mammifère (true/false) ? ");
+        System.out.print("Mammifère (true/false) : ");
         boolean isMammal = scanner.nextBoolean();
+        System.out.print("Nombre de pattes : ");
+        int nbrLegs = scanner.nextInt();
         scanner.nextLine();
 
-        Animal newAnimal = new Animal(family, name, age, isMammal);
-        if (zoo.addAnimal(newAnimal)) {
-            System.out.println("Animal ajouté avec succès au zoo " + zoo.getName());
-        } else {
-            System.out.println("Échec de l’ajout.");
-        }
+        Terrestrial t = new Terrestrial(family, name, age, isMammal, nbrLegs);
+        zoo.addAnimal(t);
     }
 
-    public static void supprimerAnimalManuel(Scanner scanner, Zoo zoo) {
-        zoo.displayAnimals();
-        if (zoo.getAnimalCount() == 0) {
-            return;
-        }
-
-        System.out.print("Entrez la famille de l’animal à supprimer : ");
+    public static void ajouterAquatic(Scanner scanner, Zoo zoo) {
+        System.out.print("Famille : ");
         String family = scanner.nextLine();
+        System.out.print("Nom : ");
+        String name = scanner.nextLine();
+        System.out.print("Âge : ");
+        int age = scanner.nextInt();
+        System.out.print("Mammifère (true/false) : ");
+        boolean isMammal = scanner.nextBoolean();
+        scanner.nextLine();
+        System.out.print("Habitat (ex: mer, océan, bassin) : ");
+        String habitat = scanner.nextLine();
 
-        System.out.print("Entrez le nom de l’animal à supprimer : ");
+        Aquatic a = new Aquatic(family, name, age, isMammal, habitat);
+        zoo.addAnimal(a);
+    }
+
+    public static void ajouterDolphin(Scanner scanner, Zoo zoo) {
+        System.out.print("Famille : ");
+        String family = scanner.nextLine();
+        System.out.print("Nom : ");
+        String name = scanner.nextLine();
+        System.out.print("Âge : ");
+        int age = scanner.nextInt();
+        System.out.print("Mammifère (true/false) : ");
+        boolean isMammal = scanner.nextBoolean();
+        scanner.nextLine();
+        System.out.print("Habitat : ");
+        String habitat = scanner.nextLine();
+        System.out.print("Vitesse de nage (km/h) : ");
+        float speed = scanner.nextFloat();
+        scanner.nextLine();
+
+        Dolphin d = new Dolphin(family, name, age, isMammal, habitat, speed);
+        zoo.addAnimal(d);
+    }
+
+    public static void ajouterPenguin(Scanner scanner, Zoo zoo) {
+        System.out.print("Famille : ");
+        String family = scanner.nextLine();
+        System.out.print("Nom : ");
+        String name = scanner.nextLine();
+        System.out.print("Âge : ");
+        int age = scanner.nextInt();
+        System.out.print("Mammifère (true/false) : ");
+        boolean isMammal = scanner.nextBoolean();
+        scanner.nextLine();
+        System.out.print("Habitat : ");
+        String habitat = scanner.nextLine();
+        System.out.print("Profondeur de nage max (mètres) : ");
+        float depth = scanner.nextFloat();
+        scanner.nextLine();
+
+        Penguin p = new Penguin(family, name, age, isMammal, habitat, depth);
+        zoo.addAnimal(p);
+    }
+
+
+    public static void supprimerAnimal(Scanner scanner, Zoo zoo) {
+        zoo.displayAnimals();
+        if (zoo.getAnimalCount() == 0) return;
+
+        System.out.print("Nom de l’animal à supprimer : ");
         String name = scanner.nextLine();
 
-        Animal toRemove = new Animal(family, name, 0, false);
-
-        if (zoo.removeAnimal(toRemove)) {
-            System.out.println("Suppression réussie dans le zoo " + zoo.getName());
-        } else {
-            System.out.println("Échec de la suppression.");
+        Animal toRemove = null;
+        for (int i = 0; i < zoo.getAnimalCount(); i++) {
         }
+
+        toRemove = new Animal("inconnue", name, 0, false);
+        zoo.removeAnimal(toRemove);
     }
 }
